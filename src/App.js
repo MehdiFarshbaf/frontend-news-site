@@ -1,6 +1,8 @@
+import Login from "./admin/auth/Login";
+
 const App = () => {
     return (
-        <p>فرانت اند</p>
+        <Login/>
     )
 }
 export default App
