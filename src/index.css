@@ -16,3 +16,10 @@
   text-align: right;
   text-decoration: none !important;
 }
+.dashboard-wrapper {
+  display: flex;
+}
+
+.main-info{
+  width: calc(100% - 300px);
+}

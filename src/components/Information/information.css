@@ -1,0 +1,51 @@
+.information {
+    width: 100%;
+    padding: 30px 200px;
+}
+
+.profile-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-item {
+    width: calc(33% - 30px);
+    background: rgb(166, 230, 235);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    border-radius: 5px;
+}
+
+.info-item:nth-child(2) {
+    background: rgb(255, 164, 161);
+}
+
+.info-item:nth-child(3) {
+    background: rgb(171, 255, 196);
+}
+
+.info-item h4 {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.info-item span {
+    font-size: 23px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.info-item svg {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 20px;
+}
