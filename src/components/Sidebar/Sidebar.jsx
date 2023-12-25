@@ -12,15 +12,9 @@ const Sidebar = () => {
                 <img src={logo} alt=""/>
             </div>
             <ul>
-                <li><Link to="/dashboard"/>داشبورد</li>
-                <li>
-                    <span onClick={() => setShowNews(!showNews)}>اخبار</span>
-                    {showNews && <ul>
-                        <li><Link to="/dashboard/add-news">افزودن خبر</Link></li>
-                        <li><Link to="/dashboard/news">لیست خبرها</Link></li>
-                    </ul>}
-                </li>
-                <li><Link to="/dashboard"/>دسته بندی</li>
+                <li><Link to="/dashboard">داشبورد</Link></li>
+                <li><Link to="/dashboard/news">لیست خبرها</Link></li>
+                <li><Link to="/dashboard/category">دسته بندی</Link></li>
                 <li><Link to="/dashboard"/>ویدیو</li>
                 <li><Link to="/dashboard"/>کاربران</li>
                 <li><Link to="/dashboard"/>نظرات</li>

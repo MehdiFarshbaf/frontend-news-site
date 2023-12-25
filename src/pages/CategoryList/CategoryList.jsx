@@ -1,55 +1,51 @@
 import {Link} from "react-router-dom";
-import './news.css'
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/context";
 
-const NewsList = () => {
+const CategoryList = () => {
 
-    const {getAllNews, allNews, deleteNews} = useContext(AuthContext)
+    const {getAllCategory, categories, deleteCategory} = useContext(AuthContext)
     const [showModal, setShowModal] = useState(false)
-    const [newsId, setNewsId] = useState(null)
+    const [categoryId, setCategoryId] = useState(null)
     const handleShowModal = async (id) => {
-        await setNewsId(id)
+        await setCategoryId(id)
         setShowModal(true)
     }
 
-    const handleDeleteNews = async () => {
-        await deleteNews(newsId)
+    const handleDeleteCategory = async () => {
+        await deleteCategory(categoryId)
         setShowModal(false)
     }
     useEffect(() => {
-        getAllNews()
+        getAllCategory()
     }, []);
 
     return (
         <div className="main">
             <div className="is-flex is-justify-content-end">
-                <Link to="/dashboard/add-news" className="button is-success px-6 mb-6">افزودن خبر</Link>
+                <Link to="/dashboard/add-category" className="button is-success px-6 mb-6">افزودن دسته بندی</Link>
             </div>
             <table className="table is-fullwidth">
                 <thead className="is-fullwidth">
                 <tr>
                     <th>شماره</th>
-                    <th>عنوان</th>
-                    <th>نویسنده</th>
-                    <th>دسته بندی</th>
+                    <th>نام دسته بندی</th>
                     <th>ویرایش</th>
                     <th>حذف</th>
                 </tr>
                 </thead>
                 <tbody>
-                {allNews && allNews.map((news, index) => (
+                {categories && categories.map((category, index) => (
                     <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{news.title}</td>
-                        <td>{news.user.fullName}</td>
-                        <td>{news.category.name}</td>
+                        <td>{category.name}</td>
                         <td>
-                            <Link to={`/dashboard/edit-news/${news.id}`} state={news}
+                            <Link to={`/dashboard/edit-category/${category.id}`} state={category}
                                   className="button is-success">ویرایش</Link>
                         </td>
                         <td>
-                            <button className="button is-danger" onClick={() => handleShowModal(news.id)}>حذف</button>
+                            <button className="button is-danger" onClick={() => handleShowModal(category.id)}>حذف
+                            </button>
                         </td>
                     </tr>
                 ))}
@@ -57,12 +53,12 @@ const NewsList = () => {
             </table>
             {showModal && <div className="modal-overlay">
                 <div className="modal-news has-text-centered">
-                    <h1>آیا از حذف خبر مطمئنید؟</h1>
-                    <button className="button is-danger ml-3" onClick={() => handleDeleteNews()}>بله</button>
+                    <h1>آیا از حذف دسته بندی مطمئنید؟</h1>
+                    <button className="button is-danger ml-3" onClick={() => handleDeleteCategory()}>بله</button>
                     <button className="button is-success" onClick={() => setShowModal(false)}>خیر</button>
                 </div>
             </div>}
         </div>
     )
 }
-export default NewsList
+export default CategoryList

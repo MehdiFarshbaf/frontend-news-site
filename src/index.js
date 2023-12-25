@@ -6,14 +6,18 @@ import App from './App';
 import 'react-toastify/dist/ReactToastify.css'
 import {AuthContextProvider} from "./context/context";
 import {ToastContainer} from "react-toastify";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, unstable_HistoryRouter as HistoryRouter} from "react-router-dom";
+import {history} from "./helper/myHistory";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
+    // <BrowserRouter>
+    <HistoryRouter history={history}>
         <AuthContextProvider>
             <App/>
             <ToastContainer position="top-right" rtl={true}/>
         </AuthContextProvider>
-    </BrowserRouter>
+    </HistoryRouter>
+
+    // </BrowserRouter>
 );
