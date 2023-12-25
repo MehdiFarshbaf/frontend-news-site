@@ -30,6 +30,9 @@ axios.interceptors.response.use(
             case 422:
                 toast.error(err.response.data.message)
                 break
+            case 404:
+                toast.error(err.response.data.message)
+                break
         }
         return Promise.reject(err.response.data);
     }

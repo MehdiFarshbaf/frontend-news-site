@@ -15,7 +15,7 @@ const Sidebar = () => {
                 <li><Link to="/dashboard">داشبورد</Link></li>
                 <li><Link to="/dashboard/news">لیست خبرها</Link></li>
                 <li><Link to="/dashboard/category">دسته بندی</Link></li>
-                <li><Link to="/dashboard"/>ویدیو</li>
+                <li><Link to="/dashboard/video">ویدیو</Link></li>
                 <li><Link to="/dashboard"/>کاربران</li>
                 <li><Link to="/dashboard"/>نظرات</li>
                 <li><Link to="/dashboard"/>خروج</li>

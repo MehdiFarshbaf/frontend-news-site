@@ -7,6 +7,8 @@ import DashboardLayout from "./Layouts/DashboardLayout/DashboardLayout";
 import AddNews from "./pages/AddNews/AddNews";
 import CategoryList from "./pages/CategoryList/CategoryList";
 import AddCategory from "./pages/AddCategory/AddCategory";
+import Video from "./pages/Video/Video";
+import AddVideo from "./pages/Video/AddVideo";
 
 
 const App = () => {
@@ -17,9 +19,14 @@ const App = () => {
                 <Route path="/admin" element={<Login/>}/>
                 <Route path="/dashboard" element={<DashboardLayout/>}>
                     <Route index element={<Dashboard/>}/>
+
+                    <Route path="/dashboard/video" element={<Video/>}/>
+                    <Route path="/dashboard/add-video" element={<AddVideo/>}/>
+
                     <Route path="/dashboard/news" element={<NewsList/>}/>
                     <Route path="/dashboard/add-news" element={<AddNews/>}/>
                     <Route path="/dashboard/edit-news/:id" element={<AddNews/>}/>
+
                     <Route path="/dashboard/category" element={<CategoryList/>}/>
                     <Route path="/dashboard/add-category" element={<AddCategory/>}/>
                     <Route path="/dashboard/edit-category/:id" element={<AddCategory/>}/>

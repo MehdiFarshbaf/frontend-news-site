@@ -9,6 +9,7 @@ export const AuthContext = createContext()
 export const AuthContextProvider = ({children}) => {
 
     const [profile, setProfile] = useState({})
+    const [videos, setVideos] = useState([])
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(false)
     const [allNews, setAllNews] = useState([])
@@ -151,6 +152,47 @@ export const AuthContextProvider = ({children}) => {
     }
     // end crud category
 
+    // start crud video
+    const createVideo = async (videoData) => {
+        setLoading(true)
+        const formData = new FormData()
+        formData.append("file", videoData.file)
+        try {
+            const {data} = await http.post("/video", formData)
+            if (data.success) {
+                toast.success(data.message)
+                setLoading(false)
+                navigate("/dashboard/video")
+            }
+        } catch (err) {
+            setLoading(false)
+        }
+    }
+    const getAllVideos = async () => {
+        try {
+            const {data} = await http.get("/video")
+            await setVideos(data.videos)
+        } catch (err) {
+            setLoading(false)
+        }
+    }
+
+    const deleteVideo = async videoId => {
+        try {
+            const {data} = await http.delete(`/video/${videoId}`)
+            if (data.success) {
+                toast.success(data.message)
+                await getAllVideos()
+                setLoading(false)
+            }
+        } catch (err) {
+            console.log(err)
+            setLoading(false)
+        }
+    }
+
+    // end crud video
+
 
     return (
         <AuthContext.Provider
@@ -167,7 +209,11 @@ export const AuthContextProvider = ({children}) => {
                 updateNews,
                 deleteCategory,
                 updateCategory,
-                createCategory
+                createCategory,
+                createVideo,
+                getAllVideos,
+                videos,
+                deleteVideo
             }}>
             {children}
         </AuthContext.Provider>
