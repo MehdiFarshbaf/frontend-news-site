@@ -2,19 +2,29 @@ import {createContext, useState} from "react";
 import http from '../helper/API'
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import {setLocale} from "yup";
+
 
 export const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
 
-    const [profile, setProfile] = useState({})
+    const [profile, setProfile] = useState(null)
     const [videos, setVideos] = useState([])
+    const [users, setUsers] = useState([])
     const [categories, setCategories] = useState([])
     const [loading, setLoading] = useState(false)
     const [allNews, setAllNews] = useState([])
     const navigate = useNavigate()
 
+
+    const handleShowErrorMessage = async (error) => {
+        if (error.status === 422 && error.data.errors) {
+            const keys = Object.keys(error.data.errors)
+            toast.error(error.data.errors[keys[0]][0])
+        }
+        toast.error(error.data.message)
+        await setLoading(false)
+    }
     const login = async (values) => {
         try {
             const {data} = await http.post("/users/login", values)
@@ -23,22 +33,9 @@ export const AuthContextProvider = ({children}) => {
             await setProfile(data.user)
             navigate("/dashboard")
         } catch (err) {
-            console.log("run catch")
-            console.log(err)
+            await handleShowErrorMessage(err)
         }
     }
-
-    const getAllUsers = async () => {
-        try {
-            const {data} = await http.get("/users")
-            if (data.success) {
-                console.log(data.users)
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
 
     // start new crud
     const createNews = async (newData) => {
@@ -56,7 +53,7 @@ export const AuthContextProvider = ({children}) => {
                 navigate("/dashboard/news")
             }
         } catch (err) {
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
 
@@ -77,7 +74,7 @@ export const AuthContextProvider = ({children}) => {
                 navigate("/dashboard/news")
             }
         } catch (err) {
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
     const getAllNews = async () => {
@@ -86,8 +83,7 @@ export const AuthContextProvider = ({children}) => {
             setAllNews(data.news)
             setLoading(false)
         } catch (err) {
-            console.log(err)
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
 
@@ -99,7 +95,7 @@ export const AuthContextProvider = ({children}) => {
                 await getAllNews()
             }
         } catch (err) {
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
     // end new crud
@@ -112,7 +108,7 @@ export const AuthContextProvider = ({children}) => {
                 await setCategories(data.categories)
             }
         } catch (err) {
-            console.log(err)
+            await handleShowErrorMessage(err)
         }
     }
     const deleteCategory = async categoryId => {
@@ -123,7 +119,7 @@ export const AuthContextProvider = ({children}) => {
                 await getAllCategory()
             }
         } catch (err) {
-            console.log(err)
+            await handleShowErrorMessage(err)
         }
     }
     const createCategory = async (values) => {
@@ -134,8 +130,7 @@ export const AuthContextProvider = ({children}) => {
                 navigate("/dashboard/category")
             }
         } catch (err) {
-            console.log(err)
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
     const updateCategory = async (id, values) => {
@@ -146,8 +141,7 @@ export const AuthContextProvider = ({children}) => {
                 navigate("/dashboard/category")
             }
         } catch (err) {
-            console.log(err)
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
     // end crud category
@@ -165,7 +159,7 @@ export const AuthContextProvider = ({children}) => {
                 navigate("/dashboard/video")
             }
         } catch (err) {
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
     const getAllVideos = async () => {
@@ -173,10 +167,9 @@ export const AuthContextProvider = ({children}) => {
             const {data} = await http.get("/video")
             await setVideos(data.videos)
         } catch (err) {
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
-
     const deleteVideo = async videoId => {
         try {
             const {data} = await http.delete(`/video/${videoId}`)
@@ -186,13 +179,69 @@ export const AuthContextProvider = ({children}) => {
                 setLoading(false)
             }
         } catch (err) {
-            console.log(err)
-            setLoading(false)
+            await handleShowErrorMessage(err)
         }
     }
 
     // end crud video
 
+    // start crud user
+    const getAllUsers = async () => {
+        try {
+            const {data} = await http.get("/users")
+            await setUsers(data.users)
+        } catch (err) {
+            await handleShowErrorMessage(err)
+        }
+    }
+
+    const createUser = async userData => {
+        try {
+            const {data} = await http.post("/users/register", userData)
+            if (data.success) {
+                toast.success(data.message)
+                setLoading(false)
+                navigate("/dashboard/users")
+            }
+            setLoading(false)
+        } catch (err) {
+            await handleShowErrorMessage(err)
+        }
+    }
+
+    const handleLogout = async () => {
+        localStorage.removeItem("token")
+        await setProfile(null)
+        toast.success("خروج موفقیت آمیز بود.")
+        navigate("/")
+    }
+    const updateUser = async (id, values) => {
+        setLoading(true)
+        try {
+            const {data} = await http.put(`/users/${id}`, values)
+            if (data.success) {
+                toast.success(data.message)
+                navigate("/dashboard/users")
+            }
+        } catch (err) {
+            await handleShowErrorMessage(err)
+        }
+    }
+
+    const deleteUser = async (userId) => {
+        setLoading(true)
+        try {
+            const {data} = await http.delete(`/users/${userId}`)
+            if (data.success) {
+                toast.success(data.message)
+                setLoading(false)
+                await getAllUsers()
+            }
+        } catch (err) {
+            await handleShowErrorMessage(err)
+        }
+    }
+    // end crud user
 
     return (
         <AuthContext.Provider
@@ -213,7 +262,9 @@ export const AuthContextProvider = ({children}) => {
                 createVideo,
                 getAllVideos,
                 videos,
-                deleteVideo
+                deleteVideo,
+                users,
+                createUser, profile, handleLogout, setProfile, updateUser, deleteUser
             }}>
             {children}
         </AuthContext.Provider>

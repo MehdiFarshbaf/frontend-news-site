@@ -9,11 +9,14 @@ import CategoryList from "./pages/CategoryList/CategoryList";
 import AddCategory from "./pages/AddCategory/AddCategory";
 import Video from "./pages/Video/Video";
 import AddVideo from "./pages/Video/AddVideo";
+import UsersList from "./pages/users/UsersList";
+import AddUser from "./pages/users/AddUser";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 
 const App = () => {
     return (
-        <>
+        <ScrollToTop>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/admin" element={<Login/>}/>
@@ -22,6 +25,10 @@ const App = () => {
 
                     <Route path="/dashboard/video" element={<Video/>}/>
                     <Route path="/dashboard/add-video" element={<AddVideo/>}/>
+
+                    <Route path="/dashboard/users" element={<UsersList/>}/>
+                    <Route path="/dashboard/add-user" element={<AddUser/>}/>
+                    <Route path="/dashboard/edit-user/:id" element={<AddUser/>}/>
 
                     <Route path="/dashboard/news" element={<NewsList/>}/>
                     <Route path="/dashboard/add-news" element={<AddNews/>}/>
@@ -32,7 +39,7 @@ const App = () => {
                     <Route path="/dashboard/edit-category/:id" element={<AddCategory/>}/>
                 </Route>
             </Routes>
-        </>
+        </ScrollToTop>
     )
 }
 export default App
