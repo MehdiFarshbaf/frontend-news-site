@@ -18,6 +18,7 @@ export const AuthContextProvider = ({children}) => {
 
 
     const handleShowErrorMessage = async (error) => {
+        console.log(error)
         if (error.status === 422 && error.data.errors) {
             const keys = Object.keys(error.data.errors)
             toast.error(error.data.errors[keys[0]][0])
@@ -30,7 +31,7 @@ export const AuthContextProvider = ({children}) => {
             const {data} = await http.post("/users/login", values)
             toast.success(data.message)
             localStorage.setItem("token", data.token)
-            await setProfile(data.user)
+            await getProfile()
             navigate("/dashboard")
         } catch (err) {
             await handleShowErrorMessage(err)
@@ -241,6 +242,36 @@ export const AuthContextProvider = ({children}) => {
             await handleShowErrorMessage(err)
         }
     }
+
+    const getProfile = async () => {
+        setLoading(true)
+        try {
+            const {data} = await http.get("/users/get-profile")
+            if (data.success) {
+                await setProfile(data.profile)
+                await setLoading(false)
+            }
+            setLoading(false)
+        } catch (err) {
+            await handleShowErrorMessage(err)
+        }
+    }
+    const updateProfile = async (values) => {
+
+        // setLoading(true)
+        try {
+            const res = await http.put(`/users/profile`, values)
+            if (res) {
+                toast.success("ویرایش پروفایل موفقیت آمیز بود. ")
+                await getProfile()
+                navigate("/dashboard")
+                setLoading(false)
+            }
+        } catch (err) {
+            console.log(err)
+            // await handleShowErrorMessage(err)
+        }
+    }
     // end crud user
 
     return (
@@ -264,7 +295,7 @@ export const AuthContextProvider = ({children}) => {
                 videos,
                 deleteVideo,
                 users,
-                createUser, profile, handleLogout, setProfile, updateUser, deleteUser
+                createUser, profile, handleLogout, setProfile, updateUser, deleteUser, updateProfile, getProfile
             }}>
             {children}
         </AuthContext.Provider>

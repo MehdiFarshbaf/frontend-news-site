@@ -16,6 +16,10 @@
     text-decoration: none !important;
 }
 
+body {
+    background: whitesmoke;
+}
+
 .dashboard-wrapper {
     display: flex;
 }
@@ -24,6 +28,17 @@
     width: calc(100% - 300px);
 }
 
+a {
+    color: rgba(36, 36, 36);
+}
+
 button {
     font-family: "IRANSansWeb";
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 0 8px;
+    }
+
 }

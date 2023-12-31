@@ -18,31 +18,7 @@ axios.interceptors.response.use(
         return res
     },
     err => {
-        // return err.response.data
-
         console.log(err.response.status)
-        // console.log(err.response.data)
-        // switch (err.response.status) {
-        //     // case 401:
-        //     //     toast.error(err.response.data.message)
-        //     //     // history.push("/admin")
-        //     //     localStorage.removeItem("token")
-        //     //     break
-        //     case 422:
-        //         if (err.response.data.errors) {
-        //             const keys = Object.keys(err.response.data.errors)
-        //             toast.error(err.response.data.errors[keys[0]][0])
-        //         } else {
-        //             toast.error(err.response.data.message)
-        //         }
-        //         break
-        //     case 404:
-        //         toast.error(err.response.data.message)
-        //         break
-        //     // default:
-        //     //     return Promise.reject(err.response.data);
-        // }
-        // return Promise.reject(err.response.data);
         return Promise.reject(err.response);
     }
 )

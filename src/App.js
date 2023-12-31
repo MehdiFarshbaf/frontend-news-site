@@ -12,16 +12,25 @@ import AddVideo from "./pages/Video/AddVideo";
 import UsersList from "./pages/users/UsersList";
 import AddUser from "./pages/users/AddUser";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Profile from "./pages/Profile/Profile";
+import MainLayout from "./Layouts/MainLayout/MainLayout";
+import AboutUs from "./pages/AboutUs/AboutUs";
 
 
 const App = () => {
     return (
         <ScrollToTop>
             <Routes>
-                <Route path="/" element={<Home/>}/>
                 <Route path="/admin" element={<Login/>}/>
+                <Route path="/" element={<MainLayout/>}>
+                    <Route index element={<Home/>}/>
+                    <Route path="/about-us" element={<AboutUs/>}/>
+                </Route>
+
                 <Route path="/dashboard" element={<DashboardLayout/>}>
                     <Route index element={<Dashboard/>}/>
+
+                    <Route path="/dashboard/profile" element={<Profile/>}/>
 
                     <Route path="/dashboard/video" element={<Video/>}/>
                     <Route path="/dashboard/add-video" element={<AddVideo/>}/>
