@@ -36,6 +36,10 @@ button {
     font-family: "IRANSansWeb";
 }
 
+.has-background-danger {
+    background: #c00 !important;
+}
+
 @media screen and (max-width: 600px) {
     .container {
         padding: 0 8px;

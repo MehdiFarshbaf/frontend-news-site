@@ -16,6 +16,7 @@ import Profile from "./pages/Profile/Profile";
 import MainLayout from "./Layouts/MainLayout/MainLayout";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import Details from "./pages/Details/Details";
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
                     <Route index element={<Home/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
                     <Route path="/contact-us" element={<ContactUs/>}/>
+                    <Route path="/details/:id" element={<Details/>}/>
                 </Route>
 
                 <Route path="/dashboard" element={<DashboardLayout/>}>
