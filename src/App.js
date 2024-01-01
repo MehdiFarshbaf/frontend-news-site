@@ -15,6 +15,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Profile from "./pages/Profile/Profile";
 import MainLayout from "./Layouts/MainLayout/MainLayout";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import ContactUs from "./pages/ContactUs/ContactUs";
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
                 <Route path="/" element={<MainLayout/>}>
                     <Route index element={<Home/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
+                    <Route path="/contact-us" element={<ContactUs/>}/>
                 </Route>
 
                 <Route path="/dashboard" element={<DashboardLayout/>}>
