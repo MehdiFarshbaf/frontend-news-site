@@ -17,7 +17,7 @@ export const AuthContextProvider = ({children}) => {
     const navigate = useNavigate()
 
 
-    const handleShowErrorMessage = async (error) => {
+     const handleShowErrorMessage = async (error) => {
         console.log(error)
         if (error.status === 422 && error.data.errors) {
             const keys = Object.keys(error.data.errors)
